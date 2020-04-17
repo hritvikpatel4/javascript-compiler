@@ -1,0 +1,38 @@
+(10>9)?y=10*3:y=9-3;
+
+b="hello";
+var e= "hi"===1;
+var z= true==1;
+
+//hello this is a comment
+
+!~sd;
+
+/*hi
+hello*/
+
+var d;
+(10<9)?10:9;
+
+/*var c=30;*/
+
+var d=20;
+
+var i=0;
+do{
+    var w=3;
+}while(i<=40);
+
+x=23.2;
+j=false;
+
+var sum=0;
+
+for(var a=10*3+21/7;a<10;a=a+1){
+    var c=20;
+    sum=sum+1;
+}
+
+
+
+
