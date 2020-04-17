@@ -1,0 +1,123 @@
+//--------------------------------------------------------------Grammar--------------------------------------------------------------------------
+%%
+S
+    : C 
+    ;
+
+C
+    : C statement tk_sc 
+    | C LOOPS 
+    | statement tk_sc 
+    | LOOPS 
+    | error tk_sc
+    ;
+
+LOOPS
+    : tk_do LOOPBODY tk_while tk_opar COND tk_cpar tk_sc 
+    | tk_for tk_opar ASSIGN_EXPR tk_sc COND tk_sc statement tk_cpar LOOPBODY 
+    ;
+
+COND
+    : LIT RELOP LIT add_quadruple
+    | LIT 
+    | un_boolop LIT 
+    ;
+
+LOOPBODY
+    : tk_obrace LOOPC tk_cbrace
+    | tk_sc 
+    | statement tk_sc 
+    ;
+
+LOOPC
+    : LOOPC statement tk_sc
+    | statement tk_sc 
+    ;
+
+statement
+    : ASSIGN_EXPR 
+    | EXP
+    | TERNARY_EXPR
+    ;
+
+ASSIGN_EXPR
+    : LIT tk_eq EXP    
+    | TYPE LIT A 
+    ;
+
+A
+    :
+    tk_eq EXP 
+    | 
+    ;
+
+EXP
+    : ADDSUB
+    | EXP tk_l ADDSUB 
+    | EXP tk_g ADDSUB 
+    | EXP tk_le ADDSUB 
+    | EXP tk_ge ADDSUB 
+    | EXP tk_neq ADDSUB
+    | EXP tk_deq ADDSUB
+    | EXP tk_teq ADDSUB 
+    | EXP tk_and ADDSUB 
+    | EXP tk_or ADDSUB 
+    ;
+	  
+ADDSUB
+    : TERM 
+    | EXP tk_add TERM 
+    | EXP tk_sub TERM 
+    ;
+
+TERM
+    : FACTOR
+    | TERM tk_mul FACTOR 
+    | TERM tk_div FACTOR 
+    | TERM tk_mod FACTOR 
+    ;
+      
+FACTOR
+    : LIT 
+    | tk_opar EXP tk_cpar
+    ;
+      
+TERNARY_EXPR
+    : tk_opar COND tk_cpar tk_tern ternary_statement 
+    ;
+
+ternary_statement
+    : ASSIGN_EXPR tk_choice ASSIGN_EXPR 
+    | EXP tk_choice EXP 
+    | ASSIGN_EXPR tk_choice EXP 
+    | EXP tk_choice ASSIGN_EXPR 
+    ;
+
+LIT
+    : tk_identifier 
+    | tk_inumber 
+    | tk_fnumber 
+    | tk_true 
+    | tk_false 
+    | tk_null 
+    | tk_str 
+    ;
+
+TYPE
+    : tk_var
+    ;
+
+RELOP
+    : tk_l 
+    | tk_g 
+    | tk_le
+    | tk_ge 
+    | tk_neq
+    | tk_deq
+    | tk_teq
+    ;
+
+un_boolop
+    : tk_not 
+    ;
+%%
